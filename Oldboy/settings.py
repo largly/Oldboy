@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app01.apps.App01Config',
+    'datasource.apps.DatasourceConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app01.utils.coreware.M1',
 ]
 
 ROOT_URLCONF = 'Oldboy.urls'
@@ -107,13 +110,38 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
+
+# LANGUAGE_CODE = 'zh-hans'
+#
+TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':'app01.service.page.MyPagination',
+    # 'UNAUTHENTICATED_USER':None,
+    'UNAUTHENTICATED_USER':lambda:'' ,
+
+}
+
+CACHES = {
+            "default": {
+                "BACKEND": "django_redis.cache.RedisCache",
+                "LOCATION": "redis://127.0.0.1:6379",
+                "OPTIONS": {
+                    "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                    "CONNECTION_POOL_KWARGS": {"max_connections": 100}
+                    # "PASSWORD": "密码",
+                }
+            },
+				}
+
 
 
 # Static files (CSS, JavaScript, Images)
